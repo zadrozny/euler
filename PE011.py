@@ -43,8 +43,8 @@ for y in range(height):
 		e 		  = sum_east(y, x)
 		s 		  = sum_south(y, x)
 		se 		  = sum_southeast(y, x)
-		sw  	  = sum_southwest(y, x)
-		current   = max(e, s, se, sw)
+		sw  	          = sum_southwest(y, x)
+		current           = max(e, s, se, sw)
 
 		if current > candidate: 
 			candidate = current
