@@ -1,5 +1,6 @@
 #PE15.py 
-''' Lattice Paths: How many routes are there through 
+''' 
+Lattice Paths: How many routes are there through 
 a 20x20 grid [from the top left to the bottom right corner]? 
 '''
 
