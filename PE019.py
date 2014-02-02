@@ -35,6 +35,5 @@ for year in range(1901, 2001):
 		 	days.append(day_of_week)
 		 	if day_of_month == 1 and day_of_week == "Sunday":
 		 		sundays += 1
-		 		#print day_of_week, month_names[month], day_of_month, year 
 
 print sundays 
