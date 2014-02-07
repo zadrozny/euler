@@ -6,7 +6,7 @@ What is the first term in the Fibonacci sequence to contain 1000 digits?
 termLength = 1000
 
 
-#Solution one: more memory intesive, possibly clearer
+#Solution one: more memory intensive, possibly clearer
 fibs = [1, 1]
 while True:
 	fibs.append(fibs[-1] + fibs[-2])
