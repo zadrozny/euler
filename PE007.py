@@ -3,21 +3,19 @@
 What is the 10 001st prime number?
 '''
 
-primelist = [2, 3] 
+prime_list = [2, 3] 
 
-candidate = primelist[-1]
+candidate = prime_list[-1]
 
-while len(primelist)<10001:
+
+while len(prime_list)<10001:
     candidate += 2							#Start at 5 and check only odds
     
-    append = True							#Prime until proven otherise
-
-    for number in primelist[1:]:  			#Skip 2
-        if candidate % number == 0:
-        	append = False
+    for prime in prime_list[1:]:  			#Skip 2
+        if candidate % prime == 0:			#Not a prime
         	break
-        
-    if append: 
-    	primelist.append(candidate)
+    else: 
+    	prime_list.append(candidate)
 
-print primelist[-1]
+
+print prime_list[-1]
