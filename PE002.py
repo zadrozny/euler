@@ -1,5 +1,9 @@
-'''PE2: By considering the terms in the Fibonacci sequence 
-whose values do not etotalceed four million, find the sum of the even-valued terms.'''
+#PE002.py 
+'''
+By considering the terms in the Fibonacci sequence 
+whose values do not exceed four million, 
+find the sum of the even-valued terms.
+'''
 
 total = 0 
 
