@@ -1,18 +1,21 @@
-#PE6.py
-'''
-Find the difference between the sum of the squares of the first one hundred natural numbers and the square of the sum.
-'''
+"""
+Project Euler Problem #6
+=========================
 
-sumSquares = 0 
-summation = 0
+The sum of the squares of the first ten natural numbers is,
+                       1^2 + 2^2 + ... + 10^2 = 385
 
-for n in range(1, 101):
-    sumSquares += n**2 
-    summation += summation + n 
+The square of the sum of the first ten natural numbers is,
+                    (1 + 2 + ... + 10)^2 = 55^2 = 3025
 
-squareSum = summation**2
+Hence the difference between the sum of the squares of the first ten
+natural numbers and the square of the sum is 3025 385 = 2640.
 
-difference = squareSum - sumSquares
+Find the difference between the sum of the squares of the first one
+hundred natural numbers and the square of the sum.
+"""
 
-print difference 
+n = 100
+
+print sum(range(n+1))**2 - sum(n*n for n in range(n+1)) 
 
