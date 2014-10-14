@@ -13,6 +13,7 @@ leading zeros.)
 """
 
 
+
 total = 0
 for n in range(1000000):
 	if list(str(n)) == list(reversed(str(n))):
