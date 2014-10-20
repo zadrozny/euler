@@ -1,17 +1,44 @@
+#from __future__  import division
+from operator import mul
+from itertools import combinations
+
+
+def factorial(n):
+	'''Return the factorial of a number.'''
+	return 1 if n == 0 else multiply(range(1, n+1))
+
+
+
 def factorize(n):
-	'''Return the prime factors of a number, n.'''
+	'''Return prme factors of a number'''
 
-	if n in [0, 1]:
-		return []
+	if n <= 0:
+		raise ValueError("n must be greater than 0.")
 
-	primes = generate_primes_less_than(n + 1)
-	factors = []
-	for prime in primes:
-		if n % prime == 0:
-			factors.append(prime)
-			n = n / prime
+	if n % 2 == 0:
+		prime_factors = [2]
 
-	return factors
+	else:
+		prime_factors = []
+
+
+	divisor = 3  # Because n is odd, start with 3 and not 2
+
+	while divisor <= n:
+
+		if n % divisor == 0: 
+
+			prime_factors.append(divisor)
+
+			n = n / divisor  			  # Update n to prevent redundancy
+
+			if n % divisor == 0:		  #Remove powers of a number
+				while n % divisor == 0:
+					n = n / divisor
+
+		divisor += 2  # Since all prime > 2 are odd
+
+	return prime_factors
 
 
 
@@ -37,7 +64,7 @@ def generate_n_primes(n):
 def generate_next_prime():
 	'''Generates next prime, ad infinitum.'''
 
-	prime_list = [] 					#Intialize with 2 to skip evens.
+	prime_list = [] 					
 
 	if len(prime_list) == 0:
 		prime_list.append(2)
@@ -89,4 +116,49 @@ def generate_primes_less_than(n):
 		candidate += 2			 				# Skip evens.					
 				
 	return prime_list
+
+
+
+def is_prime(candidate):
+	'''Return True if prime and False if not.'''
+	if candidate <= 0:
+		raise ValueError("Integer must be > 0")
+
+	if candidate == 1:
+		return False 
+		
+	if candidate == 2:
+		return True
+	
+	if candidate == 3:
+		return True
+
+	if candidate % 2 == 0:
+		return False
+
+	divisor = 3
+	while divisor <= candidate / divisor:
+		if candidate % divisor == 0:
+			return False
+		divisor += 2
+
+	return True 
+
+
+
+def multiply(lst):
+	'''Return the product of a list.'''
+	if type(lst) != list:
+		raise Exception("You need a list. You entered a: ", type(lst))
+
+	product = 1 
+	for term in lst:
+		product *= term
+	return product 
+
+
+
+def n_choose_k(n, k):
+	'''Return the number of k combinations given a set of n elements: n! / k!*(n-k)!'''
+	return factorial(n) / (factorial(k) * factorial(n - k))
 
