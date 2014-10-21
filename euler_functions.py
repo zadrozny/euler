@@ -43,19 +43,27 @@ def factorize(n):
 
 
 def generate_n_primes(n):
-	'''Generates a list of n primes'''
+	'''Returns a list of n primes'''
 	if n == 0:
 		return []
 
-	prime_list = [2] 					#Intialize with 2 to skip evens.
+	if n == 1:
+		return [2]
 
-	for n in xrange(3, n, 2): 			#Skip evens.	
-		for p in prime_list:			
-			if n%p == 0:			 	#It's not prime.
+	if n == 2:
+		return [2, 3]
+
+	prime_list = [2, 3] 				#Intialize with 2 to skip evens.
+
+	candidate = 5	
+	while len(prime_list) < n:
+		for prime in prime_list:			
+			if candidate % prime == 0:			 	#It's not prime.
 				break	
-			if p > n/p: 			 	#It is prime.
-				prime_list.append(n) 	
-				break				
+			if prime > candidate / prime: 			 	#It is prime.
+				prime_list.append(candidate) 	
+				break
+		candidate += 2	# Skip evens			
 				
 	return prime_list
 
@@ -112,7 +120,6 @@ def generate_primes_less_than(n):
 
 				prime_list.append(candidate) 	
 				break							# Break out of for loop, 									  increment candidate
-
 		candidate += 2			 				# Skip evens.					
 				
 	return prime_list
@@ -154,6 +161,7 @@ def multiply(lst):
 	product = 1 
 	for term in lst:
 		product *= term
+		
 	return product 
 
 
