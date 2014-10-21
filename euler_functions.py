@@ -5,12 +5,16 @@ from itertools import combinations
 
 def factorial(n):
 	'''Return the factorial of a number.'''
+
+	if not isinstance(n, int) or n < 0:
+		raise ValueError("n must be an integer >= 0.")
+
 	return 1 if n == 0 else multiply(range(1, n+1))
 
 
 
-def factorize(n):
-	'''Return prime factors of a number'''
+def get_prime_factors(n):
+	'''Return prime factors of a number.'''
 
 	if n <= 0:
 		raise ValueError("n must be greater than 0.")
@@ -22,7 +26,7 @@ def factorize(n):
 		prime_factors = []
 
 
-	divisor = 3  # Because n is odd, start with 3 and not 2
+	divisor = 3  # Skip 2, so increments can odd
 
 	while divisor <= n:
 
@@ -43,7 +47,8 @@ def factorize(n):
 
 
 def list_first_n_primes(n):
-	'''Returns a list of n primes'''
+	'''Return a list of n primes'''
+
 	if n == 0:
 		return []
 
@@ -63,7 +68,7 @@ def list_first_n_primes(n):
 			if prime > candidate / prime: # It is prime.
 				prime_list.append(candidate) 	
 				break
-		candidate += 2	# Skip evens			
+		candidate += 2	# Skip evens.			
 				
 	return prime_list
 
@@ -96,6 +101,7 @@ def generate_next_prime():
 
 def generate_primes_less_than(n):
 	'''Returns a list of primes less than n.'''
+
 	if n <= 2:
 		return []
 
@@ -125,6 +131,7 @@ def generate_primes_less_than(n):
 
 def is_prime(candidate):
 	'''Return True if prime and False if not.'''
+
 	if candidate <= 0:
 		raise ValueError("Integer must be > 0")
 
@@ -152,6 +159,7 @@ def is_prime(candidate):
 
 def multiply(lst):
 	'''Return the product of a list.'''
+
 	if type(lst) != list:
 		raise Exception("You need a list. You entered a: ", type(lst))
 
@@ -165,5 +173,6 @@ def multiply(lst):
 
 def n_choose_k(n, k):
 	'''Return the number of k combinations given a set of n elements: n! / k!*(n-k)!'''
+
 	return factorial(n) / (factorial(k) * factorial(n - k))
 
