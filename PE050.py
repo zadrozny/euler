@@ -1,62 +1,70 @@
-#PE50.py
+"""
+Project Euler Problem #50
+==========================
 
-#Note: Working for the test case; however, run time is terrible for 1,000,000
+The prime 41, can be written as the sum of six consecutive primes:
 
-''' 
-The prime 41, can be written as the sum of six consecutive primes: 41 = 2
-+ 3 + 5 + 7 + 11 + 13 This is the longest sum of consecutive primes that adds
-to a prime below one-hundred. 
+                       41 = 2 + 3 + 5 + 7 + 11 + 13
 
-The longest sum of consecutive primes below one-thousand that adds to a prime, contains 21 terms, and is equal to 953. 
+This is the longest sum of consecutive primes that adds to a prime below
+one-hundred.
 
-Which prime, below one-million, can be written as the sum of the most consecutive primes? 
-'''
+The longest sum of consecutive primes below one-thousand that adds to a
+prime, contains 21 terms, and is equal to 953.
 
-limit = 1000000
+Which prime, below one-million, can be written as the sum of the most
+consecutive primes?
+"""
 
-primes = [2, 3]
+from euler_functions import is_prime
 
-candidates = set(range(5, limit + 1, 2)) - set(range(6, limit + 1, 3))
+#  Initialize with some primes to see the pattern
+#  primes = {prime: {number of preceding primes: sum of preceding primes}}
 
+primes = 	{2:  {0:  0}, 
+			 3:  {1:  2}, 
+			 5:  {2:  5,  1:  3}, 
+			 7:  {3: 10,  2:  8,  1:  5}, 
+			 11: {4: 17,  3: 15,  2: 12,  1:  7},
+			 13: {5: 28,  4: 26,  3: 23,  2: 18,  1: 11}
+			 }
 
-def find_best_sequence(prime_list, prime):
+def find(limit):
 	
-	candidates = []
+	previous_prime = 13
+	candidate = 15      # previous_prime + 2
+	best_streak = 4     # 2 + 3 + 5 + 7 = 17
+	best_prime = 17     # ie, has the longest streak 
 
-	for step in range(2, len(prime_list) + 1):
-		for i in range(len(prime_list) - step):
+	while candidate < limit: # 1000000:
 
-			candidate = sum(prime_list[i:i+step])
+		if is_prime(candidate):
 
-			if candidate == prime:
-				candidates.append(prime_list[i:i+step])
-			elif candidate > prime:
-				break 
+			value = {prime + 1: primes[previous_prime][prime] + 
+						previous_prime for prime in primes[previous_prime]}																																																												
+			value[1] = previous_prime # Add preceding prime to the list
 
-	if candidates:
-		candidates.sort(key=len)
-		return candidates[-1]
-	else: 
-		return [] 
+			candidate_streak = best_streak + 1
+			while candidate_streak in value:
 
-best_candidate = 0
-best_sequence = []
+				embedded_candidate = value[candidate_streak]
+			
+				if embedded_candidate > limit:
+					return best_prime
 
-for n in candidates:
-	for prime in primes:
-		if prime > n/prime:
-			primes.append(n)
-			candidates = candidates - set(range(n*2, limit, n))
+				elif is_prime(embedded_candidate):
+					best_streak = candidate_streak
+					best_prime = embedded_candidate
+				
+				candidate_streak += 1
+			
+			primes[candidate] = value # Append the primes list
+			previous_prime = candidate
 
-			local_candidate_sequence = find_best_sequence(primes, n)
-			if len(local_candidate_sequence) > len(best_sequence):
-				best_candidate = n
-				best_sequence = local_candidate_sequence
+		candidate += 2
 
-			break 
+	return best_prime
 
-		if n % prime == 0:
-			break
+limit = 1000000	# "...which prime, below one million..."
 
-
-print best_candidate, ": ", best_sequence
+print find(limit)
