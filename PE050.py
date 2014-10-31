@@ -29,7 +29,14 @@ primes = 	{2:  {0:  0},
 			 13: {5: 28,  4: 26,  3: 23,  2: 18,  1: 11}
 			 }
 
+
+
 def find(limit):
+	
+	'''
+	Find prime below limit that can be written as
+	the sum of the most consecutive primes.
+	'''
 	
 	previous_prime = 13
 	candidate = 15      # previous_prime + 2
@@ -42,9 +49,12 @@ def find(limit):
 
 			value = {prime + 1: primes[previous_prime][prime] + 
 						previous_prime for prime in primes[previous_prime]}																																																												
+			
 			value[1] = previous_prime # Add preceding prime to the list
 
+
 			candidate_streak = best_streak + 1
+
 			while candidate_streak in value:
 
 				embedded_candidate = value[candidate_streak]
@@ -64,6 +74,7 @@ def find(limit):
 		candidate += 2
 
 	return best_prime
+
 
 limit = 1000000	# "...which prime, below one million..."
 
