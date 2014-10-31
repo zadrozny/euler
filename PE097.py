@@ -14,4 +14,4 @@ Find the last ten digits of this prime number.
 """
 
 
-print str(28433 * 2**7830457+1)[-10:]
+print str(28433 * 2**7830457 + 1)[-10:]
