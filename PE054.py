@@ -1,3 +1,4 @@
+#376
 """
 Project Euler Problem #54
 ==========================
@@ -57,12 +58,12 @@ and in each hand there is a clear winner.
 How many hands does Player 1 win?
 """
 
-
+from collections import deque
 from collections import Counter
 
 
-# Clubs, Diamonds, Hearts, Spades
-suits = 'CDHS'
+
+suits = 'CDHS' # Clubs, Diamonds, Hearts, Spades
 
 # The higher the index, the higher the value:
 cards = ['2', '3', '4', '5', '6', '7',  
@@ -77,95 +78,102 @@ def score(hand):
   
   # Royal Flush: Ten, Jack, Queen, King, Ace, in same suit.
   if set(['T', 'J', 'Q', 'K', 'A']) == set(values) and len(set(suits)) == 1:
-      player_score = 10
+      player_score = (10) 
+      print 'Royal Flush: Ten, Jack, Queen, King, Ace, in same suit.'
+
 
   # Straight Flush: All cards are consecutive values of same suit.
   elif sorted([cards.index(val) for val in values])[4] - \
        sorted([cards.index(val) for val in values])[0] == 4 and \
        len(set(values)) == 5 and \
        len(set(suits)) == 1:
-      player_score = 9
+      player_score = (9, sorted([cards.index(val) for val in values])[4])
+      print 'Straight Flush: All cards are consecutive values of same suit.'
+
 
   # Four of a Kind: Four cards of the same value.
   elif 4 in Counter(values).values():
-      player_score = 8
-    
-  # Full House: Three of a kind and a pair. '5C 5D 6H 6S 9S'
+      player_score = (8, [val for val, count in Counter(values).items() if count == 4][0], [val for val, count in Counter(values).items() if count == 1][0])
+      print 'Four of a Kind: Four cards of the same value.'
+
+  # Full House: Three of a kind and a pair. 
   elif 3 in Counter(values).values() and 2 in Counter(values).values():
-      player_score = 7
-    
+      player_score = (7, [val for val, count in Counter(values).items() if count == 3][0], [val for val, count in Counter(values).items() if count == 2][0])
+      print 'Full House: Three of a kind and a pair.'
+
   # Flush: All cards of the same suit.
   elif len(set(suits)) == 1:
-      player_score = 6
+      player_score = (6, sorted([cards.index(val) for val in values])[4],
+                         sorted([cards.index(val) for val in values])[3],
+                         sorted([cards.index(val) for val in values])[2],
+                         sorted([cards.index(val) for val in values])[1],
+                         sorted([cards.index(val) for val in values])[0])
+      print 'Flush: All cards of the same suit.'
 
-  # Straight: All cards are consecutive values. 5C 5D 5H 8C 9S
+  # Straight: All cards are consecutive values. 
   elif sorted([cards.index(val) for val in values])[4] - \
        sorted([cards.index(val) for val in values])[0] == 4 and \
        len(set(values)) == 5:
-      player_score = 5
+      player_score = (5, max([cards.index(val) for val in values]))
+      print 'Straight: All cards are consecutive values.'
 
   # Three of a Kind: Three cards of the same value.
   elif 3 in Counter(values).values():
-      player_score = 4
-
+      player_score = (4, [val for val, count in Counter(values).items() if count == 3][0], max([val for val, count in Counter(values).items() if count == 1]), min([val for val, count in Counter(values).items() if count == 1]))
+      print 'Three of a Kind: Three cards of the same value.'
+  
   # Two Pairs: Two different pairs.
   elif 2 in Counter(Counter(values).values()).values(): # Explain this!
-    player_score = 3
-
+    player_score = (3, max([val for val, count in Counter(values).items() if count == 2]), min([val for val, count in Counter(values).items() if count == 2]), [val for val, count in Counter(values).items() if count == 1][0])
+    print 'Two Pairs: Two different pairs.'
+  
   # One Pair: Two cards of the same value.
   elif 2 in Counter(values).values():
-      player_score = 2
+
+      player_score = (2, cards.index([val for val, count in Counter(values).items() if count == 2][0])) + tuple(reversed(sorted([cards.index(val) for val, count in Counter(values).items() if count == 1])))
+
+        # sorted([cards.index(val) for val in values])[2], 
+        #                 sorted([cards.index(val) for val in values])[2], 
+        #                 sorted([cards.index(val) for val in values])[1],
+        #                 sorted([cards.index(val) for val in values])[0])
+      print 'One Pair: Two cards of the same value.'
 
   # High Card: Highest value card.
   else:
-      player_score = 1 # * max(sorted(cards.index(values)))
+      player_score = (1, max([cards.index(val) for val in values]))
+      print 'High Card: Highest value card.'
 
   return player_score
 
 
-# --------------------------------------------------------------
-# Tests:
+player_one_tally = 0
+with open('PE054_hands.txt') as f:
+  for line in f.readlines():
+    player_one = line[:14].strip()
+    player_two = line[14:].strip().strip('\n')
+    print 
+    print '*'*20
+    player_one_score = deque(score(player_one))
+    player_two_score = deque(score(player_two))
 
-# Suits: Clubs, Diamonds, Hearts, Spades
+    while (player_one_score and player_two_score):
+      one = player_one_score.popleft()
+      two = player_two_score.popleft()
+      #temp = raw_input()
+      if one > two:
+        player_one_tally += 1
+        print "Player 1 wins:    ", player_one, '      ', player_two
+        break 
+      elif one < two: 
+        print "Player 2 wins:    ", player_one, '      ', player_two 
+        break 
+      else: 
+        continue
 
 
-# Royal Flush: Ten, Jack, Queen, King, Ace, in same suit.
-assert score('TC JC QC KC AC') == 10
-assert score('TD JD QD KD AC') != 10
 
-# Straight Flush: All cards are consecutive values of same suit.
-assert score('9C TC JC QC KC') == 9
-assert score('2C 3C 4C 5C 6H') != 9
+print player_one_tally
 
-# Four of a Kind: Four cards of the same value.
-assert score('9D 9S 9H 9C KH') == 8
-assert score('9D 9S 9H TC KH') != 8
 
-# Full House: Three of a kind and a pair.
-assert score('2H 2D 4C 4D 4S') == 7
-assert score('3C 3D 3S 9S 9D') == 7
-# assert score('5H AD 6C AH 9C') != 7
+     
 
-# Flush: All cards of the same suit.
-assert score('5C 6C 7C 8C KC') == 6
-assert score('2C 4C 6C 9C KS') != 6
-
-# Straight: All cards are consecutive values [BUT NOT OF SAME SUITE!].
-assert score('5C 6C 7C 8C 9H') == 5
-assert score('5C 6C KC 8C 9C') != 5
-
-# Three of a Kind: Three cards of the same value. 
-assert score('5C 5D 5H 8C 9S') == 4
-assert score('5C 5D 6H 8C 9S') != 4 
-
-# Two Pairs: Two different pairs.
-assert score('5C 5D 6H 6S 9S') == 3
-assert score('5C 5D 6H 7S 9S') != 3
-
-# One Pair: Two cards of the same value.
-assert score('5C 5D 6H 7S 9S') == 2
-assert score('2C 5D 6H 7S 9S') != 2
-
-# High Card: Highest value card.
-assert score('5C 6D 3H 7S 9S') == 1
-assert score('5C 5D 6H 7S 9S') != 1
