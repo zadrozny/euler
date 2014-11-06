@@ -153,7 +153,8 @@ def score(hand):
 
 
 
-player_one_tally = 0
+player_one_tally = 0 # 'How many hands does Player 1 win?'
+
 with open('PE054_hands.txt') as f:
   for line in f.readlines():
 
@@ -181,7 +182,7 @@ with open('PE054_hands.txt') as f:
 
 
 
-print player_one_tally
+print 'Player one wins', player_one_tally, 'hands.'
 
 
      
