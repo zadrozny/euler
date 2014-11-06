@@ -1,4 +1,3 @@
-#376
 """
 Project Euler Problem #54
 ==========================
@@ -10,7 +9,7 @@ lowest to highest, in the following way:
   * One Pair: Two cards of the same value.
   * Two Pairs: Two different pairs.
   * Three of a Kind: Three cards of the same value.
-  * Straight: All cards are consecutive values.
+  * Straight: All cards are consecutive player_values.
   * Flush: All cards of the same suit.
   * Full House: Three of a kind and a pair.
   * Four of a Kind: Four cards of the same value.
@@ -58,12 +57,12 @@ and in each hand there is a clear winner.
 How many hands does Player 1 win?
 """
 
-from collections import deque
 from collections import Counter
+from collections import deque
 
 
 
-suits = 'CDHS' # Clubs, Diamonds, Hearts, Spades
+# C = Clubs, D = Diamonds, H = Hearts, S = Spades
 
 # The higher the index, the higher the value:
 cards = ['2', '3', '4', '5', '6', '7',  
@@ -73,102 +72,112 @@ cards = ['2', '3', '4', '5', '6', '7',
 
 def score(hand):
   
-  hand = hand.split()
-  values, suits = map(list, zip(*hand))
-  
+  hand_values, hand_suits = map(list, zip(*hand))
+
+  set_values = set(hand_values)
+  size_set_values = len(set_values)
+
+  set_suit = set(hand_suits)
+  size_set_suit = len(set_suit)
+
+
+  card_values = sorted([cards.index(val) for val in hand_values])
+
+  freq_value_pairs = [(freq, cards.index(card)) for card, freq in Counter(hand_values).items()]
+
+  frequencies = [x[0] for x in freq_value_pairs] 
+
+  tie_breaker_values = [x[1] for x in reversed(sorted(freq_value_pairs))]
+
+
+  # Assign rankings for each combination, from 10 - 1.
+  # Break ties by looking at individual cards.
+  # Hence, player scores are lists:
+  # The hand_score is the first element, followed by 'tie_breaker_values'.
+
   # Royal Flush: Ten, Jack, Queen, King, Ace, in same suit.
-  if set(['T', 'J', 'Q', 'K', 'A']) == set(values) and len(set(suits)) == 1:
-      player_score = (10) 
-      print 'Royal Flush: Ten, Jack, Queen, King, Ace, in same suit.'
+  if set_values == set('TJQKA') and size_set_suit == 1:
+      hand_score = [10] 
 
 
   # Straight Flush: All cards are consecutive values of same suit.
-  elif sorted([cards.index(val) for val in values])[4] - \
-       sorted([cards.index(val) for val in values])[0] == 4 and \
-       len(set(values)) == 5 and \
-       len(set(suits)) == 1:
-      player_score = (9, sorted([cards.index(val) for val in values])[4])
-      print 'Straight Flush: All cards are consecutive values of same suit.'
+  elif card_values[4] - card_values[0] == 4 and \
+       size_set_values == 5 and size_set_suit == 1:
+      hand_score = [9]
 
 
   # Four of a Kind: Four cards of the same value.
-  elif 4 in Counter(values).values():
-      player_score = (8, [val for val, count in Counter(values).items() if count == 4][0], [val for val, count in Counter(values).items() if count == 1][0])
-      print 'Four of a Kind: Four cards of the same value.'
+  elif 4 in frequencies:
+      hand_score = [8]
+
 
   # Full House: Three of a kind and a pair. 
-  elif 3 in Counter(values).values() and 2 in Counter(values).values():
-      player_score = (7, [val for val, count in Counter(values).items() if count == 3][0], [val for val, count in Counter(values).items() if count == 2][0])
-      print 'Full House: Three of a kind and a pair.'
+  elif 3 in frequencies and 2 in frequencies:
+      hand_score = [7]
+
 
   # Flush: All cards of the same suit.
-  elif len(set(suits)) == 1:
-      player_score = (6, sorted([cards.index(val) for val in values])[4],
-                         sorted([cards.index(val) for val in values])[3],
-                         sorted([cards.index(val) for val in values])[2],
-                         sorted([cards.index(val) for val in values])[1],
-                         sorted([cards.index(val) for val in values])[0])
-      print 'Flush: All cards of the same suit.'
+  elif size_set_suit == 1:
+      hand_score = [6]
+
 
   # Straight: All cards are consecutive values. 
-  elif sorted([cards.index(val) for val in values])[4] - \
-       sorted([cards.index(val) for val in values])[0] == 4 and \
-       len(set(values)) == 5:
-      player_score = (5, max([cards.index(val) for val in values]))
-      print 'Straight: All cards are consecutive values.'
+  elif card_values[4] - card_values[0] == 4 and \
+       size_set_values == 5:
+      hand_score = [5]
+
 
   # Three of a Kind: Three cards of the same value.
-  elif 3 in Counter(values).values():
-      player_score = (4, [val for val, count in Counter(values).items() if count == 3][0], max([val for val, count in Counter(values).items() if count == 1]), min([val for val, count in Counter(values).items() if count == 1]))
-      print 'Three of a Kind: Three cards of the same value.'
-  
+  elif 3 in frequencies:
+      hand_score = [4]
+
+
   # Two Pairs: Two different pairs.
-  elif 2 in Counter(Counter(values).values()).values(): # Explain this!
-    player_score = (3, max([val for val, count in Counter(values).items() if count == 2]), min([val for val, count in Counter(values).items() if count == 2]), [val for val, count in Counter(values).items() if count == 1][0])
-    print 'Two Pairs: Two different pairs.'
+  elif 2 in Counter(frequencies).values(): # Explain this!
+    hand_score = [3]
   
+
   # One Pair: Two cards of the same value.
-  elif 2 in Counter(values).values():
+  elif 2 in frequencies:
+      hand_score = [2]
 
-      player_score = (2, cards.index([val for val, count in Counter(values).items() if count == 2][0])) + tuple(reversed(sorted([cards.index(val) for val, count in Counter(values).items() if count == 1])))
-
-        # sorted([cards.index(val) for val in values])[2], 
-        #                 sorted([cards.index(val) for val in values])[2], 
-        #                 sorted([cards.index(val) for val in values])[1],
-        #                 sorted([cards.index(val) for val in values])[0])
-      print 'One Pair: Two cards of the same value.'
 
   # High Card: Highest value card.
   else:
-      player_score = (1, max([cards.index(val) for val in values]))
-      print 'High Card: Highest value card.'
+      hand_score = [1]
 
-  return player_score
+
+  return hand_score + tie_breaker_values
+
+
+
 
 
 player_one_tally = 0
 with open('PE054_hands.txt') as f:
   for line in f.readlines():
-    player_one = line[:14].strip()
-    player_two = line[14:].strip().strip('\n')
-    print 
-    print '*'*20
+
+    line = line.strip('\n')
+    player_one = line[:14].strip().split()
+    player_two = line[14:].strip().split()
+
     player_one_score = deque(score(player_one))
     player_two_score = deque(score(player_two))
 
     while (player_one_score and player_two_score):
       one = player_one_score.popleft()
       two = player_two_score.popleft()
-      #temp = raw_input()
+
+      #temp = raw_input() # Scaffolding
+      
       if one > two:
         player_one_tally += 1
-        print "Player 1 wins:    ", player_one, '      ', player_two
         break 
       elif one < two: 
-        print "Player 2 wins:    ", player_one, '      ', player_two 
         break 
-      else: 
-        continue
+      else: # In the event of a tie
+        pass 
+
 
 
 
