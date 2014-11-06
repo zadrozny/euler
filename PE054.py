@@ -65,7 +65,7 @@ from collections import deque
 # C = Clubs, D = Diamonds, H = Hearts, S = Spades
 
 # The higher the index, the higher the value:
-cards = ['2', '3', '4', '5', '6', '7',  
+CARDS = ['2', '3', '4', '5', '6', '7',  
          '8', '9', 'T', 'J', 'Q', 'K', 'A'] # Jack, Queen, King, Ace
 
 
@@ -81,9 +81,9 @@ def score(hand):
   size_set_suit = len(set_suit)
 
 
-  card_values = sorted([cards.index(val) for val in hand_values])
+  card_values = sorted([CARDS.index(val) for val in hand_values])
 
-  freq_value_pairs = [(freq, cards.index(card)) for card, freq in Counter(hand_values).items()]
+  freq_value_pairs = [(freq, CARDS.index(card)) for card, freq in Counter(hand_values).items()]
 
   frequencies = [x[0] for x in freq_value_pairs] 
 
@@ -182,7 +182,7 @@ with open('PE054_hands.txt') as f:
 
 
 
-print 'Player one wins', player_one_tally, 'hands.'
+print 'Player one won', player_one_tally, 'hands.'
 
 
      
