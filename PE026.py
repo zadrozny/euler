@@ -27,13 +27,12 @@ getcontext().prec = 10000 # The smallest precision to capture the cycle
 
 
 def generate_decimals(d):
+	'''Returns a string of decimals for 1/d.'''
  	return str(Decimal(1) / Decimal(d))[2:]
 
 
 def find_subsequences(n):
-	'''
-	Finds sub-cycles within a cycle, eg, 01 from 01010101. 
-	'''
+	'''Finds sub-cycles within a cycle, eg, 01 from 01010101. '''
 	for i in range(len(n)/2):
 		if len(n)/(i+1) * n[:i+1] == n:
 			return i + 1
@@ -51,8 +50,6 @@ def find(n):
 
 				# Ensure it's not one short, recurring cycle:
 				return find_subsequences(n[start:window + start])
-
-
 
 
 
