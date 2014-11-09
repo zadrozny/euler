@@ -69,10 +69,9 @@ CARDS = ['2', '3', '4', '5', '6', '7',
          '8', '9', 'T', 'J', 'Q', 'K', 'A'] # Jack, Queen, King, Ace
 
 
-
 def score(hand):
   
-  hand_values, hand_suits = map(list, zip(*hand))
+  hand_values, hand_suits = zip(*hand)
 
   set_values = set(hand_values)
   size_set_values = len(set_values)
@@ -87,7 +86,7 @@ def score(hand):
 
   frequencies = [x[0] for x in freq_value_pairs] 
 
-  tie_breaker_values = [x[1] for x in reversed(sorted(freq_value_pairs))]
+  tie_breaker_values = [x[1] for x in sorted(freq_value_pairs, reverse=True)]
 
 
   # Assign rankings for each combination, from 10 - 1.
@@ -134,6 +133,7 @@ def score(hand):
 
   # Two Pairs: Two different pairs.
   elif 2 in Counter(frequencies).values(): # Explain this!
+    # Change to frequencies.count(2) == 2
     hand_score = [3]
   
 
@@ -158,6 +158,7 @@ player_one_tally = 0 # 'How many hands does Player 1 win?'
 with open('PE054_hands.txt') as f:
   for line in f.readlines():
 
+    # Fileprocessing
     line = line.strip('\n')
     player_one = line[:14].strip().split()
     player_two = line[14:].strip().split()
@@ -170,13 +171,13 @@ with open('PE054_hands.txt') as f:
       two = player_two_score.popleft()
 
       #temp = raw_input() # Scaffolding
-      
-      if one > two:
+
+      if one > two: # Player one wins.
         player_one_tally += 1
         break 
-      elif one < two: 
+      elif one < two: # Player two wins.
         break 
-      else: # In the event of a tie
+      else: # It's a tie.
         pass 
 
 
