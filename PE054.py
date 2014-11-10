@@ -158,14 +158,15 @@ player_one_tally = 0 # 'How many hands does Player 1 win?'
 with open('PE054_hands.txt') as f:
   for line in f.readlines():
 
-    # Fileprocessing
-    line = line.strip('\n')
-    player_one = line[:14].strip().split()
-    player_two = line[14:].strip().split()
+    # Process file:
+    line = line.strip().split()
+    player_one, player_two = line[:5], line[5:]
 
+    # Generate scores:
     player_one_score = deque(score(player_one))
     player_two_score = deque(score(player_two))
 
+    # Compare hands:
     while (player_one_score and player_two_score):
       one = player_one_score.popleft()
       two = player_two_score.popleft()
