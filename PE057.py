@@ -22,18 +22,26 @@ In the first one-thousand expansions, how many fractions contain a
 numerator with more digits than denominator?
 """
 
+
 def generate():
-	n, d = 1, 2
+	'''Yields an infinite sequence of numerator-denomitor tuples.'''
+
+	n, d = 1, 2  # Initialize 
+	
 	while True:
-		yield d + n, d
-		n, d = d, 2 * d + n
+		
+		yield d + n, d # Numerator-denominator pair.
+
+		n, d = d, 2*d + n # Prepare next pair. 
 
 
-x = generate()
+s = generate()
+
+
 tally = 0
-for n in range(1000):
-	numerator, denominator = next(x)
-	if len(str(numerator)) > len(str(denominator)):
+for i in range(1000):
+	n, d = next(s)		
+	if len(str(n)) > len(str(d)):
 		tally += 1
 
 
