@@ -24,7 +24,7 @@ numerator with more digits than denominator?
 
 
 def generate():
-	'''Yields an infinite sequence of numerator-denomitor tuples.'''
+	'''Yields an infinite sequence of numerator-denominator tuples.'''
 
 	n, d = 1, 2  # Initialize 
 	
