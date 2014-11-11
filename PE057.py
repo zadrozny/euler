@@ -32,8 +32,8 @@ def generate():
 x = generate()
 tally = 0
 for n in range(1000):
-	candidate = next(x)
-	if len(str(candidate[0])) > len(str(candidate[1])):
+	numerator, denominator = next(x)
+	if len(str(numerator)) > len(str(denominator)):
 		tally += 1
 
 
