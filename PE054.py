@@ -61,28 +61,20 @@ from collections import Counter
 from collections import deque
 
 
+# SUITS: C = Clubs, D = Diamonds, H = Hearts, S = Spades
 
-# C = Clubs, D = Diamonds, H = Hearts, S = Spades
-
-# The higher the index, the higher the value:
-CARDS = ['2', '3', '4', '5', '6', '7',  
+# The higher the index, the higher the rank:
+RANKS = ['2', '3', '4', '5', '6', '7',  
          '8', '9', 'T', 'J', 'Q', 'K', 'A'] # Jack, Queen, King, Ace
 
 
 def score(hand):
   
-  hand_values, hand_suits = zip(*hand)
+  hand_ranks, hand_suits = zip(*hand)
 
-  set_values = set(hand_values)
-  size_set_values = len(set_values)
+  card_values = sorted([RANKS.index(val) for val in hand_ranks])
 
-  set_suit = set(hand_suits)
-  size_set_suit = len(set_suit)
-
-
-  card_values = sorted([CARDS.index(val) for val in hand_values])
-
-  freq_value_pairs = [(freq, CARDS.index(card)) for card, freq in Counter(hand_values).items()]
+  freq_value_pairs = [(freq, RANKS.index(card)) for card, freq in Counter(hand_ranks).items()]
 
   frequencies = [x[0] for x in freq_value_pairs] 
 
@@ -95,13 +87,13 @@ def score(hand):
   # The hand_score is the first element, followed by 'tie_breaker_values'.
 
   # Royal Flush: Ten, Jack, Queen, King, Ace, in same suit.
-  if set_values == set('TJQKA') and size_set_suit == 1:
+  if set(hand_ranks) == set('TJQKA') and len(set(hand_ranks)) == 1:
       hand_score = [10] 
 
 
   # Straight Flush: All cards are consecutive values of same suit.
   elif card_values[4] - card_values[0] == 4 and \
-       size_set_values == 5 and size_set_suit == 1:
+       len(set(hand_ranks)) == 5 and len(set(hand_ranks)) == 1:
       hand_score = [9]
 
 
@@ -116,13 +108,12 @@ def score(hand):
 
 
   # Flush: All cards of the same suit.
-  elif size_set_suit == 1:
+  elif len(set(hand_suits)) == 1:
       hand_score = [6]
 
 
   # Straight: All cards are consecutive values. 
-  elif card_values[4] - card_values[0] == 4 and \
-       size_set_values == 5:
+  elif card_values[4] - card_values[0] == 4 and len(set(hand_ranks)) == 5:
       hand_score = [5]
 
 
@@ -132,8 +123,7 @@ def score(hand):
 
 
   # Two Pairs: Two different pairs.
-  elif 2 in Counter(frequencies).values(): # Explain this!
-    # Change to frequencies.count(2) == 2
+  elif frequencies.count(2) == 2:
     hand_score = [3]
   
 
@@ -170,8 +160,6 @@ with open('PE054_hands.txt') as f:
     while (player_one_score and player_two_score):
       one = player_one_score.popleft()
       two = player_two_score.popleft()
-
-      #temp = raw_input() # Scaffolding
 
       if one > two: # Player one wins.
         player_one_tally += 1
