@@ -73,32 +73,6 @@ def list_first_n_primes(n):
 	return prime_list
 
 
-
-def generate_next_prime():
-	'''Generator yielding the next prime, ad infinitum.'''
-
-	prime_list = [] 					
-
-	if len(prime_list) == 0:
-		prime_list.append(2)
-		yield 2
-	if len(prime_list) == 1:
-		prime_list.append(3)
-		yield 3
-
-	candidate = prime_list[-1]  # Strictly speaking this is a prime, not candidate.
-	while True: 
-		candidate += 2	# Skip evens; evaluate the next odd number.
-		for prime in prime_list:			
-			if candidate % prime == 0:	 # It's not prime.
-				break	
-			if prime > candidate / prime: # It is prime.
-				prime_list.append(candidate) 
-				yield candidate 	
-				break
-
-			
-
 def generate_primes_less_than(n):
 	'''Returns a list of primes less than n.'''
 
@@ -128,12 +102,43 @@ def generate_primes_less_than(n):
 	return prime_list
 
 
+def generate_next_prime(start=0, stop=None):
+	'''
+	Yield the next prime, ad infinitum; 
+	or yield primes within the limits start and stop.
+	'''
+
+	if start != 0:
+		prime_list = generate_primes_less_than(start+1)
+	else: 
+		prime_list = [] 					
+
+	if len(prime_list) == 0:
+		prime_list.append(2)
+		yield 2
+	if len(prime_list) == 1:
+		prime_list.append(3)
+		yield 3
+
+	candidate = prime_list[-1]  # Strictly speaking this is a prime, not candidate.
+
+	while stop is None or candidate <= stop: 
+		candidate += 2	# Skip evens; evaluate the next odd number.
+		for prime in prime_list:			
+			if candidate % prime == 0:	 # It's not prime.
+				break	
+			if prime > candidate / prime: # It is prime.
+				prime_list.append(candidate)
+				yield candidate 	
+				break
+
+
 
 def is_prime(candidate):
 	'''Return True if prime and False if not.'''
 
 	if candidate <= 0:
-		raise ValueError("Integer must be > 0")
+		raise ValueError("Integer must be > 0; you entered: ", candidate)
 
 	if candidate == 1:
 		return False 
