@@ -18,7 +18,7 @@ consecutive primes?
 
 from euler_functions import generate_next_prime, is_prime
 
-#  Initialize with some primes to see the pattern
+#  Initialize with some primes to see the pattern:
 #  primes = {prime: {previous n primes: sum of previous n primes, 
 # 					 previous n -1 primes: sum of previous n - 1 primes}
 # 			}
@@ -29,7 +29,6 @@ primes = 	{2:  {0:  0},
 
 
 def find(limit):
-	
 	'''
 	Find prime below limit that can be written as
 	the sum of the most consecutive primes.
@@ -37,14 +36,11 @@ def find(limit):
 	
 	previous_prime = 2
 
-	best_streak = 0     # 2 + 3 = 5
+	best_streak = 0    # 2 + 3 = 5
 	best_prime = 0     # ie, has the longest streak 
 
-	g = generate_next_prime()
+	g = generate_next_prime(start=5) 
 
-	# Rewrite below when generate_next_prime has start and stop
-	for n in range(2): next(g) # Skip 2 and 3 (already in primes)
-	
 	candidate = next(g)
 
 	while candidate < limit: # 1000000:
