@@ -4,18 +4,22 @@ What is the sum of the numbers on the diagonals in
 a 1001 by 1001 spiral...?
 '''
 
-n      =  1             	#Starting number
-total  =  1
-step   =  2					#Increment
-height =  width = 1001
-last   =  width * height  	#Final number
 
+prior_square = 1 # The center of the spiral
+total = 1
 
-while n < last:
-	for x in range(4):  	#Four corners...
-		n = n + step        #Diagonal number
-		total += n
-	step += 2				#Steps are multiples of 2
+for n in range(3, 1003, 2): # Only consider odd squares; so step = 2
+	square = n**2
 
+	# Distance from, eg, 3^2 to next new corner, ie, 13
+	distance = (square - prior_square) / 4 
+
+	# Add each new corner:
+	total += (prior_square + 1*distance  + 
+			 (prior_square + 2*distance) + 
+			 (prior_square + 3*distance) + 
+			 (prior_square + 4*distance))
+
+	prior_square = square
 
 print total
