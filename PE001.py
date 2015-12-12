@@ -9,7 +9,7 @@ print sum(n for n in xrange(1000) if n % 3 == 0 or n % 5 == 0)
 total = 0
 
 for number in range(1000): 
-	if number % 3 == 0 or number % 5 == 0:
-		total = total + number 
+    if number % 3 == 0 or number % 5 == 0:
+        total = total + number 
 
 print total 
