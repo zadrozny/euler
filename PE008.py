@@ -23,6 +23,6 @@ number = '''73167176531330624919225119674426574742355349194934
 05886116467109405077541002256983155200055935729725
 71636269561882670428252483600823257530420752963450'''
 
-number 		= ''.join(number.split('\n'))
+number = ''.join(number.split('\n'))
 
 print max([reduce(lambda x, y: x*y, (map(int, number[i:i+5]))) for i in range(len(number) - 5)])
