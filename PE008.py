@@ -23,18 +23,4 @@ number = '''73167176531330624919225119674426574742355349194934
 05886116467109405077541002256983155200055935729725
 71636269561882670428252483600823257530420752963450'''
 
-from numpy import prod
-
-number 		= ''.join(number.split('\n'))
-digits 		= len(number)
-consecutive = 5
-limit 		= digits - consecutive
-product 	= 0
-
-
-for i in range(limit):
-    candidate = prod([int(d) for d in number[i:i+consecutive]])
-    if candidate > product: 
-        product = candidate 
-
-print product     
+print max([reduce(lambda x, y: x*y, (map(int, number[i:i+5]))) for i in range(len(number) - 5)])
