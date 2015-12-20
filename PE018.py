@@ -24,14 +24,12 @@ t = """                             75
 t = list(reversed([[int(n) for n in line.split()] for line in t.split('\n')]))
 
 
-for row_index, row in enumerate(t):
-	for number_index, number in enumerate(row):
-		try: 
-			larger = max(number, row[number_index+1]) 	# Choose larger of neighbors
-			t[row_index + 1][number_index] += larger 	# Add to row below (triangle is upside down)
-		except IndexError:
-			pass 
-
+for y in range(len(t)):
+    for x in range(len(t[y])):
+        try: 
+            larger = max(t[y][x], t[y][x + 1])  # Choose larger neighbor
+            t[y + 1][x] += larger   # Add to row below (triangle is upside down)
+        except IndexError:
+            pass 
 
 print t[-1][0]
-
