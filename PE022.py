@@ -5,33 +5,15 @@ alphabetical position and the sum of the positions of its characters
 in the alphabet]? 
 """
 
+from urllib import urlopen
 import string
 
-alpha = string.uppercase
+letter_vals = {let: i for i, let in enumerate(string.uppercase, 1)}
 
-letterValues = {}
-
-for i, letter in enumerate(alpha): 
-	letterValues[letter] = i + 1
-
-
-f = #Insert path to file with names
-
-with open(f, "r") as f: 
-	names = f.readlines()
-
-
-names = [name.strip("\"") for name in names[0].split(',')]
-
+f = urlopen("https://projecteuler.net/project/resources/p022_names.txt")
+names = f.readlines()
+names = [name.strip("\n").strip('"') for name in names[0].split(',')]
 names.sort()
 
-
-total = 0
-for i, name in enumerate(names): 
-	position = i + 1
-	value    = sum([letterValues[letter] for letter in name])
-	score    = position * value
-	total   += score 
-
-
-print total 
+print sum([sum([letter_vals[let] for let in name]) * pos 
+	       for pos, name in enumerate(names, 1)])
