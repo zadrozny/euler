@@ -6,15 +6,10 @@ The largest palindrome made from the product of two 2-digit numbers is 9009 = 91
 Find the largest palindrome made from the product of two 3-digit numbers
 '''
 
-upper = 999
-lower = 100
-best  = 0
+# The smallest 3-digit number is 100
+# The largest is 999
 
-for x in xrange(upper, lower, -1):
-    for y in xrange(x, lower, -1):
-        multiple = str(x*y)
-        if multiple == multiple[::-1]: # Palindrome?
-            if x*y > best: 
-                best = x*y 
+print max(x*y for x in xrange(100, 1000) 
+              for y in xrange(100, x + 1) 
+              if str(x*y) == str(x*y)[::-1])
 
-print best 
