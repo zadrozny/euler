@@ -44,11 +44,11 @@ keys = product(map(ord, ascii_lowercase), repeat=3)
 
 for key in keys:
 	
-	translation =  [code^key for code, key in zip(cipher, cycle(key))]
-	
-	message = ''.join(map(chr, translation))
+    translation =  [code^key for code, key in zip(cipher, cycle(key))]
 
-	# Having manually checked that ' the ' is in the text
-	if ' the ' in message: 
-		print sum(map(ord, message))
-		break 
+    message = ''.join(map(chr, translation))
+
+    # Having manually checked that ' the ' is in the text
+    if ' the ' in message: 
+        print sum(map(ord, message))
+        break 
