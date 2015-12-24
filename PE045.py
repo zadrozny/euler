@@ -21,7 +21,7 @@ while True:
     hexagonals   = [(n*(2*n-1)) for n in range(start, stop)]
 	
     intersection = set.intersection(*[set((triangles)), 
-						set((pentagonals)), set((hexagonals))])
+                       set((pentagonals)), set((hexagonals))])
 	
     if intersection:
         print list(intersection)[0]
