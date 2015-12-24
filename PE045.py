@@ -14,28 +14,17 @@ It can be verified that T[285] = P[165] = H[143] = 40755.
 Find the next triangle number that is also pentagonal and hexagonal.
 """
 
-
-def gen_triangle(n):
-	return (n*(n+1))/2
-
-def gen_pentagonal(n):
-	return (n*(3*n-1))/2
-
-def gen_hexagonal(n):
-	return (n*(2*n-1))
-
-
 start, stop = 286, 1000
 while True:
-	triangles    = [gen_triangle(n) for n in range(start, stop)]
-	pentagonals  = [gen_pentagonal(n) for n in range(start, stop)]
-	hexagonals   = [gen_hexagonal(n) for n in range(start, stop)]
+    triangles    = [(n*(n+1))/2 for n in range(start, stop)]
+    pentagonals  = [(n*(3*n-1))/2 for n in range(start, stop)]
+    hexagonals   = [(n*(2*n-1)) for n in range(start, stop)]
 	
-	intersection = set.intersection(*[set((triangles)), 
+    intersection = set.intersection(*[set((triangles)), 
 						set((pentagonals)), set((hexagonals))])
 	
-	if intersection:
-		print list(intersection)[0]
-		break 
+    if intersection:
+        print list(intersection)[0]
+        break 
 	
-	start, stop = stop, stop*10
+    start, stop = stop, stop*10
