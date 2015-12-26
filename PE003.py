@@ -8,7 +8,7 @@ n = 600851475143
 
 x = 3                 # n is odd, so start with 3, not 2
 
-candidate = None	  # Potential largest prime factor
+candidate = None      # Potential largest prime factor
 
 while x <= n:
     if n % x == 0:
