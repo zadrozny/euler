@@ -9,7 +9,7 @@ of two abundant numbers.
 
 def find_proper_divisors(n):
     "Returns list of proper divisors of n."
-    if n==1: 
+    if n == 1: 
         return []
     else:
         divisors = [1]
