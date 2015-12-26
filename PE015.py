@@ -11,10 +11,10 @@ paths = {}
 for y in range(height + 1): 
     for x in range(width + 1): 
         if 0 in (x, y): 
-            #All coordinates on left / top perimiter have only one path:
+            # All coordinates on left / top perimeter have one path:
             paths[(x, y)] = 1
         else: 
-            #incoming paths = paths from left + paths from above:
+            # incoming paths = paths from left + paths from above:
             paths[(x, y)] = paths[(x - 1), y] + paths[(x, y - 1)]
 
 
