@@ -12,7 +12,7 @@ total = 1 # The center of the spiral
 for i in range(3, 1001 + 1, 2):
     # Start is the upper right corner
     # Stop is the lower right corner
-    # Step is negative because we're spirling backwards
-    total += sum(range(i**2, i**2 - ((i - 1)*4), -1*(i - 1)))
+    # Step is negative because we're spirling backwards / counter-clockwise
+    total += sum(range(i**2, i**2 - 4*(i-1), -1*(i-1)))
 
 print total
