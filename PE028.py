@@ -10,9 +10,9 @@ total = 1 # The center of the spiral
 # Stop is the dimension of the square: 1001
 # Step is 2 because the 1001 is odd
 for i in range(3, 1001 + 1, 2):
-	# Start is the upper right corner
-	# Stop is the lower right corner
-	# Step is negative because we're spirling backwards
+    # Start is the upper right corner
+    # Stop is the lower right corner
+    # Step is negative because we're spirling backwards
     total += sum(range(i**2, i**2 - ((i - 1)*4), -1*(i - 1)))
 
 print total
