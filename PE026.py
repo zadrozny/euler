@@ -32,24 +32,24 @@ def generate_decimals(d):
 
 
 def find_subsequences(n):
-	'''Finds sub-cycles within a cycle, eg, 01 from 01010101. '''
-	for i in range(len(n)/2):
-		if len(n)/(i+1) * n[:i+1] == n:
-			return i + 1
-	return len(n)
+    '''Finds sub-cycles within a cycle, eg, 01 from 01010101. '''
+    for i in range(len(n)/2):
+        if len(n)/(i+1) * n[:i+1] == n:
+            return i + 1
+    return len(n)
 
 
 def find(n):
-	'''Finds the longest potential cycle in a sequence.'''
+    '''Finds the longest potential cycle in a sequence.'''
 
-	for window in range(len(n)/2, 0, -1): # Best case: cycle is half the sequence
+    for window in range(len(n)/2, 0, -1): # Best case: cycle is half the sequence
 
-		for start in range(0, (len(n) - 2*window + 1 )):
+        for start in range(0, (len(n) - 2*window + 1 )):
 
-			if 2 * n[start:window+start] in n:
+            if 2 * n[start:window+start] in n:
 
-				# Ensure it's not one short, recurring cycle:
-				return find_subsequences(n[start:window + start])
+                # Ensure it's not one short, recurring cycle:
+                return find_subsequences(n[start:window + start])
 
 
 
@@ -57,11 +57,11 @@ best_d = 0        # The best denominator
 longest_recurring_cycle = 0 # Length of cycle for the best denominator
 
 for n in range(1, 1000):
-	candidate = generate_decimals(n)
-	candidate_longest = find(candidate)
-	if candidate_longest > longest_recurring_cycle:
-		longest_recurring_cycle = candidate_longest
-		best_d = n
+    candidate = generate_decimals(n)
+    candidate_longest = find(candidate)
+    if candidate_longest > longest_recurring_cycle:
+        longest_recurring_cycle = candidate_longest
+        best_d = n
 
 
 print 'The value of d that produces the longest recurring cycle is', best_d
