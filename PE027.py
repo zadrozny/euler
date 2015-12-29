@@ -27,40 +27,31 @@ expression that produces the maximum number of primes for consecutive
 values of n, starting with n = 0.
 """
 
+from euler_functions import is_prime
+
 def calc_quad(n, a, b):
-	'''Calculate n**2 + a*n + b.'''
-	return n**2 + a*n + b 
+    '''Calculate n**2 + a*n + b.'''
+    return n**2 + a*n + b 
 
-def is_prime(n):
-	'''Determine whether a number is or isn't prime.'''
-	if n <= 2: return False 
-	if n == 2: return True
-	i = 2
-	while i <= n / i:
-		if n % i == 0:
-			return False 
-		i += 1
-	return True 
-
-primes = [n for n in range(1, 1000, 2) if is_prime(n)] #Set of potential values of b
+primes = [n for n in range(1, 1000, 2) if is_prime(n)] # Potential values of b
 
 best_n, best_a, best_b, prime_record = None, None, None, None
 
 for a in range(-999, 1000):
-	for b in primes:		#At a = 0, b must be a prime.
-		prime_list = []
- 		n = 0
-		while True:
-			candidate = calc_quad(n, a, b)
-			if is_prime(candidate):
-				prime_list.append(candidate)
-				n+=1
-			else:
-				break
+    for b in primes:		# At a = 0, b must be a prime.
+        prime_list = []
+        n = 0
+        while True:
+            candidate = calc_quad(n, a, b)
+            if candidate > 1 and is_prime(candidate):
+                prime_list.append(candidate)
+                n+=1
+            else:
+                break
 
- 		primes_produced = len(prime_list) 
+        primes_produced = len(prime_list) 
 
-		if primes_produced > prime_record:
-			best_n, best_a, best_b, prime_record = n, a, b, primes_produced
+        if primes_produced > prime_record:
+            best_n, best_a, best_b, prime_record = n, a, b, primes_produced
 
 print best_a*best_b
