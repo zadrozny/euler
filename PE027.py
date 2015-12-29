@@ -29,10 +29,6 @@ values of n, starting with n = 0.
 
 from euler_functions import is_prime
 
-def calc_quad(n, a, b):
-    '''Calculate n**2 + a*n + b.'''
-    return n**2 + a*n + b 
-
 primes = [n for n in range(1, 1000, 2) if is_prime(n)] # Potential values of b
 
 best_n, best_a, best_b, prime_record = None, None, None, None
@@ -42,7 +38,7 @@ for a in range(-999, 1000):
         prime_list = []
         n = 0
         while True:
-            candidate = calc_quad(n, a, b)
+            candidate = n**2 + a*n + b # Euler's formula
             if candidate > 1 and is_prime(candidate):
                 prime_list.append(candidate)
                 n+=1
