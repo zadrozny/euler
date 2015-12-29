@@ -27,8 +27,8 @@ getcontext().prec = 10000 # The smallest precision to capture the cycle
 
 
 def generate_decimals(d):
-	'''Returns a string of decimals for 1/d.'''
- 	return str(Decimal(1) / Decimal(d))[2:]
+    '''Returns a string of decimals for 1/d.'''
+    return str(Decimal(1) / Decimal(d))[2:]
 
 
 def find_subsequences(n):
@@ -42,12 +42,10 @@ def find_subsequences(n):
 def find(n):
     '''Finds the longest potential cycle in a sequence.'''
 
-    for window in range(len(n)/2, 0, -1): # Best case: cycle is half the sequence
-
+    # Best case: cycle is half the sequence
+    for window in range(len(n)/2, 0, -1): 
         for start in range(0, (len(n) - 2*window + 1 )):
-
             if 2 * n[start:window+start] in n:
-
                 # Ensure it's not one short, recurring cycle:
                 return find_subsequences(n[start:window + start])
 
