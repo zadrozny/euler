@@ -4,180 +4,177 @@ from itertools import combinations
 
 
 def factorial(n):
-	'''Return the factorial of a number.'''
+    '''Return the factorial of a number.'''
 
-	if not isinstance(n, int) or n < 0:
-		raise ValueError("n must be an integer >= 0.")
+    if not isinstance(n, int) or n < 0:
+        raise ValueError("n must be an integer >= 0.")
 
-	return 1 if n == 0 else multiply(range(1, n+1))
-
+    return 1 if n == 0 else multiply(range(1, n+1))
 
 
 def get_prime_factors(n):
-	'''Return prime factors of a number.'''
+    '''Return prime factors of a number.'''
 
-	if n <= 0:
+    if n <= 0:
 		raise ValueError("n must be greater than 0.")
 
-	if n % 2 == 0:
-		prime_factors = [2]
+    if n % 2 == 0:
+        prime_factors = [2]
 
-	else:
-		prime_factors = []
+    else:
+        prime_factors = []
 
 
-	divisor = 3  # Skip 2, so increments can odd
+    divisor = 3  # Skip 2, so increments can be odd
 
-	while divisor <= n:
+    while divisor <= n:
+        if n % divisor == 0: 
+            prime_factors.append(divisor)
 
-		if n % divisor == 0: 
+            n = n / divisor  			  # Update n to prevent redundancy
 
-			prime_factors.append(divisor)
+            if n % divisor == 0:		  # Remove powers of a number
+                while n % divisor == 0:
+                    n = n / divisor
 
-			n = n / divisor  			  # Update n to prevent redundancy
+        divisor += 2  # All primes > 2 are odd
 
-			if n % divisor == 0:		  #Remove powers of a number
-				while n % divisor == 0:
-					n = n / divisor
-
-		divisor += 2  # Since all prime > 2 are odd
-
-	return prime_factors
+    return prime_factors
 
 
 
 def list_first_n_primes(n):
-	'''Return a list of n primes'''
+    '''Return a list of n primes'''
 
-	if n == 0:
-		return []
+    if n == 0:
+        return []
 
-	if n == 1:
-		return [2]
+    if n == 1:
+        return [2]
 
-	if n == 2:
-		return [2, 3]
+    if n == 2:
+        return [2, 3]
 
-	prime_list = [2, 3]  # Intialize with 2 to skip evens.
+    prime_list = [2, 3]  # Intialize with 2 to skip evens.
 
-	candidate = 5	
-	while len(prime_list) < n:
-		for prime in prime_list:			
-			if candidate % prime == 0:	# It's not prime.
-				break	
-			if prime > candidate / prime: # It is prime.
-				prime_list.append(candidate) 	
-				break
-		candidate += 2	# Skip evens.			
+    candidate = 5	
+    while len(prime_list) < n:
+        for prime in prime_list:			
+            if candidate % prime == 0:	# It's not prime.
+                break	
+            if prime > candidate / prime: # It is prime.
+                prime_list.append(candidate) 	
+                break
+        candidate += 2	# Skip evens.			
 				
-	return prime_list
+    return prime_list
 
 
 def generate_primes_less_than(n):
-	'''Returns a list of primes less than n.'''
+    '''Returns a list of primes less than n.'''
 
-	if n <= 2:
-		return []
+    if n <= 2:
+        return []
 
-	if n <= 3:
-		return [2]
+    if n <= 3:
+        return [2]
 	
-	if n <= 5:
-		return [2, 3]
+    if n <= 5:
+        return [2, 3]
 
-	prime_list = [2, 3] # Intialize with 2 to skip evens.
+    prime_list = [2, 3] # Intialize with 2 to skip evens.
 
-	candidate = 5
-	while candidate < n:
-		for prime in prime_list:			
-			if candidate % prime == 0: # It's not prime.
-				break	
+    candidate = 5
+    while candidate < n:
+        for prime in prime_list:			
+            if candidate % prime == 0: # It's not prime.
+                break	
 
-			if prime > candidate / prime: # It is prime.
-				prime_list.append(candidate) 	
-				break	
+            if prime > candidate / prime: # It is prime.
+                prime_list.append(candidate) 	
+                break	
 		
-		candidate += 2	# Skip evens.					
+        candidate += 2	# Skip evens.					
 				
-	return prime_list
+    return prime_list
 
 
 def generate_next_prime(start=0, stop=None):
-	'''
-	Yield the next prime, ad infinitum; 
-	or yield primes within the limits start and stop.
-	'''
+    '''
+    Yield the next prime, ad infinitum; 
+    or yield primes within the limits start and stop.
+    '''
 
-	if start != 0:
-		prime_list = generate_primes_less_than(start+1)
-	else: 
-		prime_list = [] 					
+    if start != 0:
+        prime_list = generate_primes_less_than(start+1)
+    else: 
+        prime_list = [] 					
 
-	if len(prime_list) == 0:
-		prime_list.append(2)
-		yield 2
-	if len(prime_list) == 1:
-		prime_list.append(3)
-		yield 3
+    if len(prime_list) == 0:
+        prime_list.append(2)
+        yield 2
+    if len(prime_list) == 1:
+        prime_list.append(3)
+        yield 3
 
-	candidate = prime_list[-1]  # Strictly speaking this is a prime, not candidate.
+    candidate = prime_list[-1]  # Strictly speaking this is a prime, not candidate.
 
-	while stop is None or candidate <= stop: 
-		candidate += 2	# Skip evens; evaluate the next odd number.
-		for prime in prime_list:			
-			if candidate % prime == 0:	 # It's not prime.
-				break	
-			if prime > candidate / prime: # It is prime.
-				prime_list.append(candidate)
-				yield candidate 	
-				break
+    while stop is None or candidate <= stop: 
+        candidate += 2	# Skip evens; evaluate the next odd number.
+        for prime in prime_list:			
+            if candidate % prime == 0:	 # It's not prime.
+                break	
+            if prime > candidate / prime: # It is prime.
+                prime_list.append(candidate)
+                yield candidate 	
+                break
 
 
 
 def is_prime(candidate):
-	'''Return True if prime and False if not.'''
+    '''Return True if prime and False if not.'''
 
-	if candidate <= 0:
-		raise ValueError("Integer must be > 0; you entered: ", candidate)
+    if candidate <= 0:
+        raise ValueError("Integer must be > 0; you entered: ", candidate)
 
-	if candidate == 1:
-		return False 
+    if candidate == 1:
+        return False 
 		
-	if candidate == 2:
-		return True
+    if candidate == 2:
+        return True
 	
-	if candidate == 3:
-		return True
+    if candidate == 3:
+        return True
 
-	if candidate % 2 == 0:
-		return False
+    if candidate % 2 == 0:
+        return False
 
-	divisor = 3
-	while divisor <= candidate / divisor:
-		if candidate % divisor == 0:
-			return False
-		divisor += 2
+    divisor = 3
+    while divisor <= candidate / divisor:
+        if candidate % divisor == 0:
+            return False
+        divisor += 2
 
-	return True 
+    return True 
 
 
 
 def multiply(lst):
-	'''Return the product of a list.'''
+    '''Return the product of a list.'''
 
-	if type(lst) != list:
-		raise Exception("You need a list. You entered a: ", type(lst))
+    if type(lst) != list:
+        raise Exception("You need a list. You entered a: ", type(lst))
 
-	product = 1 
-	for term in lst:
-		product *= term
+    product = 1 
+    for term in lst:
+        product *= term
 
-	return product 
+    return product 
 
 
 
 def n_choose_k(n, k):
-	'''Return the number of k combinations given a set of n elements: n! / k!*(n-k)!'''
+    '''Return k combinations n elements: n! / k!*(n-k)!'''
 
-	return factorial(n) / (factorial(k) * factorial(n - k))
+    return factorial(n) / (factorial(k) * factorial(n - k))
 
