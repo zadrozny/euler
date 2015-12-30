@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# -*- coding: iso-8859-15 -*-
+# -*- coding: utf-8 -*-
 
 """
 Project Euler Problem #31
@@ -23,15 +23,17 @@ How many different ways can -L-2 be made using any number of coins?
 
 # 1p, 2p, 5p, 10p, 20p, 50p, -L-1 (100p) and -L-2 (200p).
 
-# list of coin deonominations
-a = [1, 2, 5, 10, 20, 50, 100, 200] 
+# list of coin denominations
+denominations = [1, 2, 5, 10, 20, 50, 100, 200] 
 
-def f(n,k): # n is amount we're making change for, k is number of types of coin
-	if k < 1 or n < 0:
-		return 0
-	elif n == 0:
-		return 1
-	else:
-		return f(n, k-1) + f(n - a[k-1], k)
+
+def f(amount, coin_types): 
+    if coin_types < 1 or amount < 0:
+        return 0
+    elif amount == 0:
+        return 1
+    else:
+        return f(amount, coin_types-1) + \
+               f(amount - denominations[coin_types-1], coin_types)
 
 print f(200, 8)
