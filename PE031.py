@@ -27,13 +27,13 @@ How many different ways can -L-2 be made using any number of coins?
 denominations = [1, 2, 5, 10, 20, 50, 100, 200] 
 
 
-def f(amount, coin_types): 
+def make_change(amount, coin_types): 
     if coin_types < 1 or amount < 0:
         return 0
     elif amount == 0:
         return 1
     else:
-        return f(amount, coin_types-1) + \
-               f(amount - denominations[coin_types-1], coin_types)
+        return make_change(amount, coin_types-1) + \
+               make_change(amount - denominations[coin_types-1], coin_types)
 
-print f(200, 8)
+print make_change(200, 8)
