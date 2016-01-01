@@ -21,10 +21,10 @@ import requests
 r = requests.get('https://projecteuler.net/project/resources/p099_base_exp.txt').text
 
 
-# Create a list consisting of: line number (from 1 on), base, and exponent
+# Create a list consisting of: line number (enumerating from 1), base, and exponent
 f = [[i]+[int(n) for n in l.split(',')] for i, l in enumerate(r.split('\n'), 1)]
 
-# Multiply the log of the base by the exponent for each pair
+# Get the logarithm of each pair
 # Sort the pairs by the size of the result
-# Get the the last line-base-exponent
+# Get the line number from the last line-base-exponent
 print sorted(f, key=lambda t: t[2]*log(t[1], 10))[-1] 
