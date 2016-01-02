@@ -131,6 +131,11 @@ def generate_next_prime(start=0, stop=None):
 
 
 
+def generate_triangle_number(n):
+    '''Returns the triangle T of n. Equivalent to sum(range(n+1)).'''
+    return (n*(n+1))/2
+
+    
 def is_prime(candidate):
     '''Return True if prime and False if not.'''
 
