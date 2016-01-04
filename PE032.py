@@ -18,17 +18,17 @@ perms = list(permutations('123456789'))
 
 products = []
 for perm in perms:
-	perm = list(perm)
-	for x in range(1, 8):
-		perm_copy = perm[:]		  #Prevent duplication of '*', eg, '**' and '***'
-		perm_copy.insert(x, '*')
-		for y in range(x+2, 8):
-			candidate = perm_copy[:]
-			candidate.insert(y, '==')
-			candidate = ''.join(candidate)
-			if eval(candidate): #If idenity is true...
-				products.append(int(candidate.split("==")[1]))
+    perm = list(perm)
+    for x in range(1, 8):
+        perm_copy = perm[:] # Prevent duplication of '*', eg, '**' and '***'
+        perm_copy.insert(x, '*')
+        for y in range(x+2, 8):
+            candidate = perm_copy[:]
+            candidate.insert(y, '==')
+            candidate = ''.join(candidate)
+            if eval(candidate): # If idenity is true...
+                products.append(int(candidate.split("==")[1]))
 
-products = list(set(products)) #Remove duplicate products
+products = list(set(products)) # Remove duplicate products
 
 print sum(products)
