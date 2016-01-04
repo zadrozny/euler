@@ -9,7 +9,8 @@ def factorial(n):
     if not isinstance(n, int) or n < 0:
         raise ValueError("n must be an integer >= 0.")
 
-    return 1 if n == 0 else multiply(range(1, n+1))
+    return 1 if n == 0 else reduce(lambda x, y: x*y, (range(1, n+1)))
+
 
 
 def get_prime_factors(n):
