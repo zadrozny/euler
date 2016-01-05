@@ -13,10 +13,10 @@ leading zeros.)
 """
 
 total = 0
-for n in range(1000000):
-	if list(str(n)) == list(reversed(str(n))):
-		b = bin(n)[2:]
-		if list(b) == list(reversed(b)):
-			total += n
+for n in xrange(10**6):
+    if list(str(n)) == list(reversed(str(n))):
+        b = bin(n)[2:] # Remove prefix: 0b
+        if list(b) == list(reversed(b)):
+            total += n
 
 print total 
