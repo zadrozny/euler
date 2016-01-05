@@ -72,31 +72,24 @@ def list_first_n_primes(n):
 
 
 def generate_primes_less_than(n):
-    '''Returns a list of primes less than n.'''
+    '''Return a list of primes less than n.'''
 
-    if n <= 2:
-        return []
+    if n <= 2: return []
 
-    if n <= 3:
-        return [2]
-	
-    if n <= 5:
-        return [2, 3]
+    if n == 3: return [2]
+    
+    if n <= 5: return [2, 3]
 
-    prime_list = [2, 3] # Intialize with 2 to skip evens.
+    prime_list = [2, 3] # Intialize with 2 to skip evens
 
-    candidate = 5
-    while candidate < n:
-        for prime in prime_list:			
-            if candidate % prime == 0: # It's not prime.
-                break	
-
-            if prime > candidate / prime: # It is prime.
-                prime_list.append(candidate) 	
-                break	
-		
-        candidate += 2	# Skip evens.					
-				
+    for candidate in xrange(5, n, 2):       # Skip evens
+        for prime in prime_list:            
+            if candidate % prime == 0:      # It's not prime
+                break   
+            if prime > candidate / prime:   # It is prime
+                prime_list.append(candidate)    
+                break   
+            
     return prime_list
 
 
@@ -143,7 +136,7 @@ def is_prime(candidate):
     if candidate <= 0:
         raise ValueError("Integer must be > 0; you entered: ", candidate)
 
-    if candidate == 1:
+    if candidate == 1: 
         return False 
 		
     if candidate == 2:
