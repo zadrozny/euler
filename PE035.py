@@ -3,28 +3,17 @@
 How many circular primes are there below one million? 
 """
 
+from euler_functions import generate_primes_less_than as g
 
-prime_list = [2] 					#Intialize with 2 to skip evens.
+primes = set(g(10**6)) # Convert to set for faster comparison
 
-for n in xrange(3, 1000000, 2): 		
-	for p in prime_list:			
-		if n%p == 0:			 	#It's not prime.
-			break	
-		if p > n/p: 			 	#It is prime.
-			prime_list.append(n) 	
-			break				
-			
-prime_list = set(prime_list)
+circular = 0
 
+for prime in primes:
+    prime = str(prime)
+    # Collect rotations and cast them to set so we can use issubset
+    rotations = set([int(prime[i:] + prime[:i]) for i, d in enumerate((prime))])
+    if rotations.issubset(primes):
+        circular += 1
 
-
-circular_primes = []
-
-for prime in prime_list:
-	prime = str(prime)
-	rotations = set([int(prime[i:] + prime[:i]) for i, d in enumerate((prime))])
-	if rotations.issubset(prime_list):
-		circular_primes.append(prime)
-
-
-print len(circular_primes)
+print circular
