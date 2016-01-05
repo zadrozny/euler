@@ -17,13 +17,13 @@ numerators   = []
 denominators = []
 
 for x in range(10, 99):
-	for y in range(x+1, 100):
-		try: 
-			if str(x)[1] == str(y)[0]:
-				if float(str(x)[0]) / int(str(y)[1]) == float(x) / y:
-					numerators.append(x)
-					denominators.append(y)
-		except ZeroDivisionError: 
-			pass 
+    for y in range(x+1, 100):
+        try: 
+            if str(x)[1] == str(y)[0]:
+                if float(str(x)[0]) / int(str(y)[1]) == float(x) / y:
+                    numerators.append(x)
+                    denominators.append(y)
+        except ZeroDivisionError: 
+            pass 
 
 print prod(denominators) / prod(numerators)
