@@ -13,20 +13,8 @@ find the value of the following expression.
 d1*d10*d100*d1000*d10000*d100000*d1000000 
 '''
 
+from numpy import prod
 
-limit = 1000000 
+constant = ''.join(str(n) for n in xrange(1000000+1)) # d1000000   
 
-s 	  = ''
-
-for n in xrange(limit):
-	s += str(n)
-
-
-product = 1 
-
-i = 1
-while i <= limit:
-	product *= int(s[i])
-	i *= 10
-
-print product 
+print prod([int(constant[10**n]) for n in range(0, 7)])
