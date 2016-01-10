@@ -4,24 +4,17 @@ solutions for p = 120. {20,48,52}, {24,45,51}, {30,40,50} For which value of p <
 1000, is the number of solutions maximised?'''
 
 
-best_perimeter = 0
-solutions_best = 0
+from collections import Counter
+from math import sqrt
 
-for perimeter in range(12, 1001): # Start with 3, 4, 5 triangle
-	
-    solutions_current = 0
-    for a in range(1, perimeter/2 + 1): 
-        for b in range(a+1, perimeter-a):
-            c = perimeter - a - b
-            if a**2 + b**2 == c**2:
-                solutions_current += 1
+cnt = Counter()
 
-            if a**2 + b**2 > c**2: 
-            	break 
+p = 1000 # Perimeter
 
-    if solutions_current > solutions_best:
-        solutions_best = solutions_current
-        best_perimeter = perimeter
+for a in range(1, p + 1 - 2):  
+    for b in range(a+1, p - a):
+        root = sqrt(a**2+b**2) 
+        if root == int(root) and a+b+root <= 1000:
+            cnt[a+b+root] += 1
 
-
-print best_perimeter
+print int(cnt.most_common(1)[0][0])
