@@ -1,21 +1,24 @@
 #PE042.py
 
+from requests import get
 import string
 
-letter_scores    = {letter: i+1 for i, letter in enumerate(string.uppercase)}
+r = get('https://projecteuler.net/project/resources/p042_words.txt').text
 
-triangle_numbers = [0.5*n*(n+1) for n in range(50)] #50 is arbitrary; seems big enough
+# Clean up: split, convert unicode to str, strip extra quotes
+words = [word.strip('"') for word in map(str, r.split(','))]
 
+# Create letter scores lookup table
+letter_scores = {letter: i for i, letter in enumerate(string.uppercase, 1)}
 
-with open(r'ProjectEulerProblem42words.txt') as f: 
-	words = f.readlines()
+# Convert words to scores
+word_scores = [sum(letter_scores[letter] for letter in word) for word in words]
 
+# Choose number of triangle numbers with largest word score (could be optimized)
+limit = max(word_scores) 
 
-triangle_words = 0
+# Generate triangle numbers
+triangle_numbers = [0.5*n*(n+1) for n in xrange(limit)] 
 
-for word in words[0].split(","):
-	word_score = sum(letter_scores[letter] for letter in word[1:-1])
-	if word_score in triangle_numbers:
-		triangle_words += 1
-
-print triangle_words
+# Count triangle words
+print len([w for w in word_scores if w in triangle_numbers])
