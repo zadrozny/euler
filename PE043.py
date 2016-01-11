@@ -25,11 +25,11 @@ from itertools import permutations
 num = '1406357289'
 
 def test(n):
-	divisors = [17, 13, 11, 7, 5, 3, 2]
-	for i in range(1, 8):
-		if int(n[i:i+3]) % divisors.pop() != 0:
-			return False
-	return True	
+    divisors = [17, 13, 11, 7, 5, 3, 2]
+    for i in range(1, 8):
+        if int(n[i:i+3]) % divisors.pop() != 0:
+            return False
+    return True	
 
 members = [int(''.join(candidate)) for candidate in 
              permutations(num) if test(''.join(candidate))]
