@@ -47,4 +47,4 @@ while True:
     elif check(n) == False: 
         print n                      # Found it!
         break 
-    n+=2 			                 # Check next odd
+    n+=2                             # Check next odd
