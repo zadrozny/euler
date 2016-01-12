@@ -15,25 +15,32 @@ What 12-digit number do you form by concatenating the three terms in this
 sequence?
 """
 
-from euler_functions import is_prime
+from euler_functions import generate_next_prime 
+from collections import defaultdict
+
+p = generate_next_prime()      # Prime generator
+
+candidates = defaultdict(list) # Candidate primes, stored by digit hash
+
+candidate = next(p)            # The first prime: 2
+while candidate < 1000:        # Get the first 4-digit prime
+	candidate = next(p)        # Avoid `if candidate > 999` in next while loop
 
 
-def check_distances(primelist):
-    for x, prime_one in enumerate(primelist):
-        for y, prime_two in enumerate(primelist[x+1:]):
-            for prime_three in primelist[y+1:]:
-                if prime_three - prime_two == prime_two - prime_one:
-                    print str(prime_one)+str(prime_two)+str(prime_three)
+while True:
+    key = tuple(sorted(str(candidate)))
+    candidates[key].append(candidate)
+    if len(candidates[key]) >= 3:
+        # Check for sequence:                          
+        if candidates[key][-1] - candidates[key][-2] == \
+           candidates[key][-2] - candidates[key][-3]:
+            print ''.join(map(str, candidates[key][-3:]))
+            break                    	
+    candidate = next(p)
 
 
-primes = {}
-for n in range(1001, 10000, 2):
-    if is_prime(n):
-        key = ''.join(sorted(list(str(n))))
-        if key in primes:
-            primes[key].append(n)
-            if len(primes[key]) >= 3:
-                check_distances(primes[key])
-        else:
-            primes[key] = [n]
+
+
+
+
 
