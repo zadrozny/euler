@@ -18,16 +18,13 @@ the value of D?
 from itertools import combinations
 
 def generate_pentagonal(n):
-	return n * (3 * n - 1)/2
+    return n * (3 * n - 1)/2
 
 #Storing in a dictionary means a runtime of ~5 secs; list takes much longer
 #The range is arbitrary at present (though it does return the correct answer)
 pentagonals = {generate_pentagonal(n) for n in range(1, 10000)}
 
 for candidate in list(combinations(pentagonals, 2)):
-	if candidate[0] + candidate[1] in pentagonals:
-		if candidate[1] - candidate[0] in pentagonals:
-			print candidate[1] - candidate[0]
-
-
-
+    if candidate[0] + candidate[1] in pentagonals:
+        if candidate[1] - candidate[0] in pentagonals:
+            print candidate[1] - candidate[0]
