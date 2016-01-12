@@ -36,13 +36,12 @@ def check(n):
     return False                     # Eureka! Cannot be written
 
 
-g = generate_next_prime()            # Prime generator
-primes = {next(g) for i in range(3)} # Seed with 2, 3, 5
+p = generate_next_prime()            # Prime generator
+primes = {next(p) for i in range(3)} # Seed with 2, 3, 5
 
 n = 3                                # First odd to check
 while True: 
-    p = next(g)
-    primes.add(p)
+    primes.add(next(p))
     if n in primes:                  # Not a composite
         pass	
     elif check(n) == False: 
