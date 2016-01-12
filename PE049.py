@@ -37,10 +37,3 @@ while True:
             print ''.join(map(str, candidates[key][-3:]))
             break                    	
     candidate = next(p)
-
-
-
-
-
-
-
