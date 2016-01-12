@@ -18,7 +18,7 @@ What is the smallest odd composite that cannot be written as the sum of a
 prime and twice a square?
 """
 
-from euler_functions import is_prime, generate_next_prime 
+from euler_functions import generate_next_prime 
 
 
 def check(n):
