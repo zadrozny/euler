@@ -14,20 +14,53 @@ Find the pair of pentagonal numbers, P[j] and P[k], for which their sum
 and difference is pentagonal and D = |P[k] - P[j]| is minimised; what is
 the value of D?
 """
+# Runs in [Finished in 129.2s] -- awful
 
 from itertools import combinations
+from collections import deque
 
-def generate_pentagonal(n):
-	return n * (3 * n - 1)/2
+def generate_pentagonal(n=1):
+    while True:
+        yield n * (3 * n - 1)/2
 
-#Storing in a dictionary means a runtime of ~5 secs; list takes much longer
-#The range is arbitrary at present (though it does return the correct answer)
-pentagonals = {generate_pentagonal(n) for n in range(1, 10000)}
+g = generate_pentagonal(2)
 
-for candidate in list(combinations(pentagonals, 2)):
-	if candidate[0] + candidate[1] in pentagonals:
-		if candidate[1] - candidate[0] in pentagonals:
-			print candidate[1] - candidate[0]
+pentagonals = [1]
+pentagonal_set = {1}
+candidates  = deque()
+
+def find():
+    while True:
+
+        if candidates == deque():
+            candidate = next(g)
+        else:
+            candidate = candidates.popleft()
+
+        for p in pentagonals:
+    	    if candidate - p in pentagonal_set:
+    		    # Look ahead
+                print candidates
+                while candidate + p > candidates[-1] or candidates == deque():
+                    candidates.append(next(g))
+
+                    if candidate + p in candidates:
+                        return candidate, p
+        
+        pentagonals.append(candidate)
+        pentagonal_set.add(candidate)                    
+
+
+print find()
+
+# Storing in a set means a runtime of ~5 secs; list takes much longer
+# The range is arbitrary at present (though it does return the correct answer)
+# pentagonals = {generate_pentagonal(n) for n in range(1, 10000)}
+
+# for candidate in list(combinations(pentagonals, 2)):
+# 	if candidate[0] + candidate[1] in pentagonals:
+# 		if candidate[1] - candidate[0] in pentagonals:
+# 			print candidate[1] - candidate[0]
 
 
 

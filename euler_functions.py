@@ -2,6 +2,8 @@
 from operator import mul
 from itertools import combinations
 
+# Add quadratic equation: (-b +- sqrt(  b**2 - 4*a*c)) * (1/2*a)
+
 
 def factorial(n):
     '''Return the factorial of a number.'''

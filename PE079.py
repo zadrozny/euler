@@ -59,6 +59,6 @@ for k, v in d.items():
         if k in d[i]:
             print k, i # Would mean there's a duplicate digit 
 
-# A bit of manual fiddling produces: 
+# A bit of manual (yeah, I got lazy, rewrite later) fiddling produces: 
 
 73162890

@@ -4,7 +4,7 @@ What is the first term in the Fibonacci sequence to contain 1000 digits?
 """
 
 prior, current = 1, 1 # Initialize Fib
-terms = 2 # ...with two terms
+terms = 2             # ...with two terms
 
 while True:
     terms += 1
@@ -12,5 +12,3 @@ while True:
     if len(str(current)) == 1000: # digits
         print terms
         break
-
-		 

@@ -29,5 +29,6 @@ for n in range(11, 21):
         if factors.count(f) > result[f]:
             result[f] = factors.count(f)
 
+
 print reduce(lambda x, y: x*y, [k**v for k,v in result.items()])
 

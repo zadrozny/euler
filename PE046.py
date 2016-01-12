@@ -18,40 +18,34 @@ What is the smallest odd composite that cannot be written as the sum of a
 prime and twice a square?
 """
 
-
 from euler_functions import is_prime, generate_next_prime 
-# generate_primes_less_than
 
 
 def check(n):
     '''Check whether n can be written as the sum 
 	of a prime and twice a square'''
 
-    # primes = generate_primes_less_than(n)
-
     for p in primes: 
         i = 1
         total = 0
         while total < n:
-            total = p + 2 * i**2
+            total = p + 2 * i**2     # Sum of prime and twice a square
             i+=1
         if total == n:
-            return True           # Can be written
-    return False                  # Cannot be written
+            return True              # Can be written
+    return False                     # Eureka! Cannot be written
 
 
-g = generate_next_prime()
+g = generate_next_prime()            # Prime generator
 primes = {next(g) for i in range(3)} # Seed with 2, 3, 5
 
-n = 3
+n = 3                                # First odd to check
 while True: 
     p = next(g)
     primes.add(p)
-    if n in primes:
+    if n in primes:                  # Not a composite
         pass	
     elif check(n) == False: 
-        print n
+        print n                      # Found it!
         break 
-    n+=2 			# Check only odds
-
-
+    n+=2 			                 # Check next odd
