@@ -24,7 +24,7 @@ candidates = defaultdict(list) # Candidate primes, stored by digit hash
 
 candidate = next(p)            # The first prime: 2
 while candidate < 1000:        # Get the first 4-digit prime
-	candidate = next(p)        # Avoid `if candidate > 999` in next while loop
+    candidate = next(p)        # Avoid `if candidate > 999` in next while loop
 
 
 while True:
