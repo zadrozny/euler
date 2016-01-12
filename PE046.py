@@ -19,36 +19,39 @@ prime and twice a square?
 """
 
 
-from euler_functions import is_prime, generate_primes_less_than
+from euler_functions import is_prime, generate_next_prime 
+# generate_primes_less_than
+
 
 def check(n):
-	'''Check whether n can be written as the sum 
+    '''Check whether n can be written as the sum 
 	of a prime and twice a square'''
 
-	primes = generate_primes_less_than(n)
+    # primes = generate_primes_less_than(n)
 
-	for prime in primes: 
-		i = 1
-		total = 0
-		while total < n:
-			total = prime + 2 * i**2
-			i+=1
-		if total == n:
-			return True # Can be written
+    for p in primes: 
+        i = 1
+        total = 0
+        while total < n:
+            total = p + 2 * i**2
+            i+=1
+        if total == n:
+            return True           # Can be written
+    return False                  # Cannot be written
 
-	return False # Cannot be written
 
+g = generate_next_prime()
+primes = {next(g) for i in range(3)} # Seed with 2, 3, 5
 
-n = 9
+n = 3
 while True: 
-
-	if is_prime(n):
-		pass
-	
-	elif check(n) == False: 
-		print n
-		break 
-
-	n+=2 			# Check only odds
+    p = next(g)
+    primes.add(p)
+    if n in primes:
+        pass	
+    elif check(n) == False: 
+        print n
+        break 
+    n+=2 			# Check only odds
 
 
