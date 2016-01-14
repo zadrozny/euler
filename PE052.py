@@ -9,12 +9,13 @@ Find the smallest positive integer, x, such that 2x, 3x, 4x, 5x, and 6x,
 contain the same digits.
 """
 
+
 x = 1
 while True:
-	if len(set([tuple(sorted(str(n*x))) for n in range(2, 7)])) == 1:
-		print x
-		break 
-	else:
-		x += 1
+    if len(set([tuple(sorted(str(n*x))) for n in range(2, 7)])) == 1:
+        print x
+        break 
+    else:
+        x += 1
 
 
