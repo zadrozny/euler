@@ -24,58 +24,54 @@ primes = generate_next_prime() # Infinite generator
 
 
 def replace(n, new_digit, *indices):
-	lst = list(str(n))
-	for i in indices:
-		if lst[i] != str(new_digit):
-			lst[i] = str(new_digit)
-		else: 
-			return None
-
-	return int(''.join(lst))
+    lst = list(str(n))
+    for i in indices:
+        if lst[i] != str(new_digit):
+            lst[i] = str(new_digit)
+        else: 
+            return None
+    return int(''.join(lst))
 
 
 def test(prime, number_of_primes=8):
-	length = len(str(prime)) # Number of digits in the prime
+    length = len(str(prime)) # Number of digits in the prime
 
-	primes_list = [prime]
+    primes_list = [prime]
 
-	# How many digits are we replacing?
-	for num in range(1, length + 1): 
+    # How many digits are we replacing?
+    for num in range(1, length + 1): 
 		
-		# Which digits are we replacing?
-		for comb in combinations(range(length), num): 
+        # Which digits are we replacing?
+        for comb in combinations(range(length), num): 
 
-			# Which digit are we replacing it with?
-			for d in range(1,10): 
+            # Which digit are we replacing it with?
+            for d in range(1,10): 
 			
-				candidate = replace(prime, d, *comb)
+                candidate = replace(prime, d, *comb)
 
-				try: 
-					if is_prime(candidate):
-						if candidate not in primes_list:
-							primes_list.append(candidate)
-				except ValueError:
-					pass 
+                try: 
+                    if is_prime(candidate):
+                        if candidate not in primes_list:
+                            primes_list.append(candidate)
+                except ValueError:
+                    pass 
 				
-				if len(primes_list) == number_of_primes:
-					return primes_list
+                if len(primes_list) == number_of_primes:
+                    return primes_list
 
-			primes_list = primes_list[:1] # Reset primes_list
+            primes_list = primes_list[:1] # Reset primes_list
 
-		primes_list = primes_list[:1] # Reset primes_list
+        primes_list = primes_list[:1] # Reset primes_list
 
-	return None
+    return None
 
 
 while True:
-	prime = next(primes)
-
-	lst = test(prime)
-
-	if lst:
-		print prime
-		print lst 
-		break 
+    prime = next(primes)
+    if test(prime):
+        print prime
+        print lst 
+        break 
 
 
 
