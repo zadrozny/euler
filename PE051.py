@@ -36,13 +36,13 @@ def replace(n, new_digit, *indices):
 def test(prime, number_of_primes=8):
     length = len(str(prime)) # Number of digits in the prime
 
-    primes_list = [prime]
+    primes = [prime]
 
     # How many digits are we replacing?
-    for num in range(1, length + 1): 
+    for n in range(1, length + 1): 
 		
         # Which digits are we replacing?
-        for comb in combinations(range(length), num): 
+        for comb in combinations(range(length), n): 
 
             # Which digit are we replacing it with?
             for d in range(1,10): 
@@ -51,17 +51,17 @@ def test(prime, number_of_primes=8):
 
                 try: 
                     if is_prime(candidate):
-                        if candidate not in primes_list:
-                            primes_list.append(candidate)
+                        if candidate not in primes:
+                            primes.append(candidate)
                 except ValueError:
                     pass 
 				
-                if len(primes_list) == number_of_primes:
-                    return primes_list
+                if len(primes) == number_of_primes:
+                    return primes
 
-            primes_list = primes_list[:1] # Reset primes_list
+            primes = primes[:1] # Reset primes
 
-        primes_list = primes_list[:1] # Reset primes_list
+        primes = primes[:1] # Reset primes
 
     return None
 
