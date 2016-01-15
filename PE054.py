@@ -70,83 +70,72 @@ RANKS = ['2', '3', '4', '5', '6', '7',
 
 def score(hand):
   
-  hand_ranks, hand_suits = zip(*hand)
+    hand_ranks, hand_suits = zip(*hand)
 
-  card_values = sorted([RANKS.index(val) for val in hand_ranks])
+    card_values = sorted([RANKS.index(val) for val in hand_ranks])
 
-  freq_value_pairs = [(freq, RANKS.index(card)) for card, freq in Counter(hand_ranks).items()]
+    freq_value_pairs = [(freq, RANKS.index(card)) for card, freq in Counter(hand_ranks).items()]
 
-  frequencies = [x[0] for x in freq_value_pairs] 
+    frequencies = [x[0] for x in freq_value_pairs] 
 
-  tie_breaker_values = [x[1] for x in sorted(freq_value_pairs, reverse=True)]
-
-
-  # Assign rankings for each combination, from 10 - 1.
-  # Break ties by looking at individual cards.
-  # Hence, player scores are lists:
-  # The hand_score is the first element, followed by 'tie_breaker_values'.
-
-  # Royal Flush: Ten, Jack, Queen, King, Ace, in same suit.
-  if set(hand_ranks) == set('TJQKA') and len(set(hand_ranks)) == 1:
-      hand_score = [10] 
+    tie_breaker_values = [x[1] for x in sorted(freq_value_pairs, reverse=True)]
 
 
-  # Straight Flush: All cards are consecutive values of same suit.
-  elif card_values[4] - card_values[0] == 4 and \
-       len(set(hand_ranks)) == 5 and len(set(hand_ranks)) == 1:
-      hand_score = [9]
+    # Assign rankings for each combination, from 10 - 1.
+    # Break ties by looking at individual cards.
+    # Hence, player scores are lists:
+    # The hand_score is the first element, followed by 'tie_breaker_values'.
 
+    # Royal Flush: Ten, Jack, Queen, King, Ace, in same suit.
+    if set(hand_ranks) == set('TJQKA') and len(set(hand_ranks)) == 1:
+        hand_score = [10] 
 
-  # Four of a Kind: Four cards of the same value.
-  elif 4 in frequencies:
-      hand_score = [8]
+    # Straight Flush: All cards are consecutive values of same suit.
+    elif card_values[4] - card_values[0] == 4 and \
+                    len(set(hand_ranks)) == 5 and \
+                    len(set(hand_ranks)) == 1:
+        hand_score = [9]
 
+    # Four of a Kind: Four cards of the same value.
+    elif 4 in frequencies:
+        hand_score = [8]
 
-  # Full House: Three of a kind and a pair. 
-  elif 3 in frequencies and 2 in frequencies:
-      hand_score = [7]
+    # Full House: Three of a kind and a pair. 
+    elif 3 in frequencies and 2 in frequencies:
+        hand_score = [7]
 
+    # Flush: All cards of the same suit.
+    elif len(set(hand_suits)) == 1:
+        hand_score = [6]
 
-  # Flush: All cards of the same suit.
-  elif len(set(hand_suits)) == 1:
-      hand_score = [6]
+    # Straight: All cards are consecutive values. 
+    elif card_values[4] - card_values[0] == 4 and len(set(hand_ranks)) == 5:
+        hand_score = [5]
 
+    # Three of a Kind: Three cards of the same value.
+    elif 3 in frequencies:
+        hand_score = [4]
 
-  # Straight: All cards are consecutive values. 
-  elif card_values[4] - card_values[0] == 4 and len(set(hand_ranks)) == 5:
-      hand_score = [5]
+    # Two Pairs: Two different pairs.
+    elif frequencies.count(2) == 2:
+        hand_score = [3]
 
+    # One Pair: Two cards of the same value.
+    elif 2 in frequencies:
+        hand_score = [2]
 
-  # Three of a Kind: Three cards of the same value.
-  elif 3 in frequencies:
-      hand_score = [4]
+    # High Card: Highest value card.
+    else:
+        hand_score = [1]
 
-
-  # Two Pairs: Two different pairs.
-  elif frequencies.count(2) == 2:
-    hand_score = [3]
-  
-
-  # One Pair: Two cards of the same value.
-  elif 2 in frequencies:
-      hand_score = [2]
-
-
-  # High Card: Highest value card.
-  else:
-      hand_score = [1]
-
-
-  return hand_score + tie_breaker_values
-
-
+    return hand_score + tie_breaker_values
 
 
 
 player_one_tally = 0 # 'How many hands does Player 1 win?'
 
 with open('PE054_hands.txt') as f:
-  for line in f.readlines():
+    for line in f.readlines():
 
     # Process file:
     line = line.strip().split()
@@ -158,18 +147,16 @@ with open('PE054_hands.txt') as f:
 
     # Compare hands:
     while (player_one_score and player_two_score):
-      one = player_one_score.popleft()
-      two = player_two_score.popleft()
+        one = player_one_score.popleft()
+        two = player_two_score.popleft()
 
-      if one > two: # Player one wins.
-        player_one_tally += 1
-        break 
-      elif one < two: # Player two wins.
-        break 
-      else: # It's a tie.
-        pass 
-
-
+        if one > two: # Player one wins.
+            player_one_tally += 1
+            break 
+        elif one < two: # Player two wins.
+            break 
+        else: # It's a tie.
+            pass 
 
 
 print 'Player one won', player_one_tally, 'hands.'
