@@ -27,28 +27,27 @@ from __future__ import division
 from euler_functions import is_prime
 
 
-
 def generate_diagonals():
 	
-	diagonals = [1, 3, 5, 7, 9] # Initialize
+    diagonals = [1, 3, 5, 7, 9] # Initialize
 
-	primes = [n for n in diagonals if is_prime(n)]
-	
-	side_length = 3 # Equivalent to sqrt(diagonals[-1])
+    primes = [n for n in diagonals if is_prime(n)]
 
-	while True:
-		side_length += 2 # Adding 2 gives us 'one complete new layer' (not half)
+    side_length = 3 # Equivalent to sqrt(diagonals[-1])
 
-		for _ in range(4): # Four new diagonals each time
+    while True:
+        side_length += 2 # Adding 2 gives 'one complete new layer' (not half)
+
+        for _ in range(4): # Four new diagonals each time
 			
-			diagonal = diagonals[-1] + side_length - 1
+            diagonal = diagonals[-1] + side_length - 1
 			
-			diagonals.append(diagonal)
+            diagonals.append(diagonal)
 
-			if is_prime(diagonal):
-				primes.append(diagonal)
+            if is_prime(diagonal):
+                primes.append(diagonal)
 
-		yield (side_length, len(primes), len(diagonals))
+        yield (side_length, len(primes), len(diagonals))
 
 
 
@@ -56,10 +55,10 @@ def generate_diagonals():
 g = generate_diagonals()
 
 while True:
-	side_length, num_of_primes, num_of_diagonals = next(g)
+    side_length, num_of_primes, num_of_diagonals = next(g)
 
-	ratio = num_of_primes / num_of_diagonals
+    ratio = num_of_primes / num_of_diagonals
 
-	if ratio  < 0.10:
-		print "side_length: ", side_length
-		break 
+    if ratio < 0.10:
+        print "side_length: ", side_length
+        break 
