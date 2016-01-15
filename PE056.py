@@ -13,8 +13,8 @@ the maximum digital sum?
 largest = 0
 
 for a in xrange(1, 100):
-	for b in xrange(1, 100):
-		total = sum(map(int, list(str(a**b))))
-		largest = max(largest, total)
+    for b in xrange(1, 100):
+        total = sum(map(int, list(str(a**b))))
+        largest = max(largest, total)
 
 print largest
