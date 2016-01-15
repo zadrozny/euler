@@ -23,9 +23,9 @@ from euler_functions import n_choose_k
 
 total = 0
 for n in xrange(1, 101):
-	for k in xrange(1, n):
-		if n_choose_k(n, k) > 1000000:
-			total += 1
+    for k in xrange(1, n):
+        if n_choose_k(n, k) > 1000000:
+            total += 1
 
 print total 
 
@@ -33,4 +33,4 @@ print total
 # And as a one liner:
 
 print sum(n_choose_k(n, k) > 1000000 for n in xrange(1, 101) 
-	for k in xrange(1, n) if n_choose_k(n, k) > 1000000)
+            for k in xrange(1, n) if n_choose_k(n, k) > 1000000)
