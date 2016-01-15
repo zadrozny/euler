@@ -37,21 +37,22 @@ theoretical nature of Lychrel numbers.
 # Solved in 15 minutes on 2014-10-03
 
 def find(n, iterations=1):
-	'''Determine number of iterations required to get palindrome.'''
+    '''Determine number of iterations required to get palindrome.'''
 	
-	candidate = n + int(str(n)[::-1]) # Add n to its reverse
-	if candidate == int(str(candidate)[::-1]): # Is it a palindrome?
-		return iterations
-	else:
-		iterations += 1
-		return find(candidate, iterations) 
+    candidate = n + int(str(n)[::-1])          # Add n to its reverse
+    if candidate == int(str(candidate)[::-1]): # Is it a palindrome?
+        return iterations
+    else:
+        iterations += 1
+        return find(candidate, iterations) 
 
 
 Lychrels = 0
 for n in range(10000):
-	try: 
-		find(n)
-	except RuntimeError: # Recursion depth exceeded = Lychrel "found"
-		Lychrels += 1
+    try: 
+        find(n)
+    except RuntimeError: # Recursion depth exceeded = Lychrel "found"
+        Lychrels += 1
+
 
 print Lychrels
