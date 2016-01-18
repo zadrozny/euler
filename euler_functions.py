@@ -176,6 +176,6 @@ def multiply(lst):
 
 def n_choose_k(n, k):
     '''Return k combinations n elements: n! / k!*(n-k)!'''
-
+    if n - k < 0:
+        raise Exception('n must be >= k')
     return factorial(n) / (factorial(k) * factorial(n - k))
-
